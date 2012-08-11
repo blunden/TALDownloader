@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="se.blunden.taldownloader"
     android:versionCode="1"
-    android:versionName="1.1" >
+    android:versionName="1.2" >
 
-    <uses-sdk android:minSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="11" 
+              android:targetSdkVersion="16" />
 
     <application
         android:icon="@drawable/icon"

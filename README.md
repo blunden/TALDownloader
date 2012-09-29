@@ -15,8 +15,8 @@ Installation
 Requirements
 -------
 
-Currently requires Android 4.0.3 since I never took the time to
-verify compatibility with lower API levels than 15.
+Currently requires Android 3.0 APIs. It has however not actually been
+functionally tested on anything lower than API level 15 (Android 4.0.3). 
 
 Authors
 -------

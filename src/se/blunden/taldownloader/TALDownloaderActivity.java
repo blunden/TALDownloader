@@ -30,6 +30,8 @@ import java.util.regex.*;
 
 public class TALDownloaderActivity extends Activity {
     
+	private static final String TAG = "TALDownloader";
+	
 	private static final int DIALOG_ERROR_EPISODE_ID = 0;
 	private static final int DIALOG_ERROR_CONNECTION_ID = 1;
 	private static final int DIALOG_ERROR_DOMAIN_ID = 2;
@@ -44,14 +46,14 @@ public class TALDownloaderActivity extends Activity {
         Intent intent = getIntent();
     	
         if (intent.getAction().equals(Intent.ACTION_SEND)) {
-        	Log.d("TALDownloader","Intent received");
+        	Log.d(TAG, "Intent received");
         	
         	String receivedUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
         	
         	String talBaseUrl = "http://audio.thisamericanlife.org/jomamashouse/ismymamashouse/";
         	
         	if(!isThisAmericanLife(receivedUrl)) {
-        		Log.e("TALDownloader","Invalid domain!");
+        		Log.e(TAG, "Invalid domain!");
         		
         		showDialog(DIALOG_ERROR_DOMAIN_ID);
         		return;
@@ -59,7 +61,7 @@ public class TALDownloaderActivity extends Activity {
         	
         	String episode = getEpisode(receivedUrl);
         	if(episode.compareTo("") == 0) {
-        		Log.e("TALDownloader","No episode number found in URL: " + receivedUrl);
+        		Log.e(TAG, "No episode number found in URL: " + receivedUrl);
         		
         		showDialog(DIALOG_ERROR_EPISODE_ID);
         		return;
@@ -67,7 +69,7 @@ public class TALDownloaderActivity extends Activity {
         	
         	// Make sure we have an internet connection
         	if(!isConnected()) {
-        		Log.e("TALDownloader","No internet connection detected!");
+        		Log.e(TAG, "No internet connection detected!");
         		
         		showDialog(DIALOG_ERROR_CONNECTION_ID);
         		return;
@@ -75,7 +77,7 @@ public class TALDownloaderActivity extends Activity {
         	
         	// Make sure external storage is mounted and writable
         	if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-        		Log.e("TALDownloader","Storage not mounted or not writeable!");
+        		Log.e(TAG, "Storage not mounted or not writeable!");
         		
         		showDialog(DIALOG_ERROR_STORAGE_ID);
         		return;
@@ -88,14 +90,14 @@ public class TALDownloaderActivity extends Activity {
         	
         	// Download to the Podcast directory 
         	request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PODCASTS , episode + ".mp3");
-        	Log.d("TALDownloader","Download directory set to: " + Environment.DIRECTORY_PODCASTS);
+        	Log.d(TAG, "Download directory set to: " + Environment.DIRECTORY_PODCASTS);
         	
         	// Run Media Scanner when done to make it show up in music players
         	request.allowScanningByMediaScanner();
         	
         	// Notify user of download status
-        	request.setTitle("TAL Downloader");
-        	request.setDescription("Downloading This American Life " + episode + "...");
+        	request.setTitle(getString(R.string.app_name));
+        	request.setDescription(R.string.download_description + episode + "...");
         	request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); // API 11
         	
         	// Initiate the download
@@ -110,7 +112,7 @@ public class TALDownloaderActivity extends Activity {
      * @return the episode number as a string or empty string if not found
      */
 	public String getEpisode(String url) {
-    	Log.d("TALDownloader","getEpisode(" + url + ") called");
+    	Log.d(TAG, "getEpisode(" + url + ") called");
     	
     	// Include "/" in the regexp to be slightly more resistant to URL format changes and act numbers
     	Pattern pattern = Pattern.compile("/[0-9]+/");
@@ -118,7 +120,7 @@ public class TALDownloaderActivity extends Activity {
     	
     	if(m.find()) {
     		String match = m.group();
-    		Log.d("TALDownloader","match = " + match);
+    		Log.d(TAG, "match = " + match);
     		return match.substring(1, match.length() - 1); // remove slashes
     	} else {
     		// No match
@@ -153,11 +155,11 @@ public class TALDownloaderActivity extends Activity {
         switch(id) {
         case DIALOG_ERROR_EPISODE_ID:
         	builder = new AlertDialog.Builder(this);
-    		builder.setTitle("No episode number found")
-    			   .setMessage("No episode number found in URL.")
+    		builder.setTitle(R.string.error_episode_title)
+    			   .setMessage(R.string.error_episode_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
     				   public void onClick(DialogInterface dialog, int id) {
     		                finish();
     		           }
@@ -166,11 +168,11 @@ public class TALDownloaderActivity extends Activity {
             break;
         case DIALOG_ERROR_CONNECTION_ID:
         	builder = new AlertDialog.Builder(this);
-    		builder.setTitle("Unable to download file")
-    			   .setMessage("No network connectivity detected.")
+    		builder.setTitle(R.string.error_connection_title)
+    			   .setMessage(R.string.error_connection_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
     				   public void onClick(DialogInterface dialog, int id) {
     		                finish();
     		           }
@@ -179,11 +181,11 @@ public class TALDownloaderActivity extends Activity {
             break;
         case DIALOG_ERROR_DOMAIN_ID:
         	builder = new AlertDialog.Builder(this);
-    		builder.setTitle("Invalid domain")
-    			   .setMessage("Domain is not thisamericanlife.org.")
+    		builder.setTitle(R.string.error_domain_title)
+    			   .setMessage(R.string.error_domain_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
     				   public void onClick(DialogInterface dialog, int id) {
     		                finish();
     		           }
@@ -192,11 +194,11 @@ public class TALDownloaderActivity extends Activity {
         	break;
         case DIALOG_ERROR_STORAGE_ID:
         	builder = new AlertDialog.Builder(this);
-    		builder.setTitle("Unable to download file")
-    			   .setMessage("Could not write to storage.")
+    		builder.setTitle(R.string.error_storage_title)
+    			   .setMessage(R.string.error_storage_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
     				   public void onClick(DialogInterface dialog, int id) {
     		                finish();
     		           }

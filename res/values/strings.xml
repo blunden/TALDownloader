@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TAL Downloader</string>
+    
+    <string name="dialog_button_ok">OK</string>
+    
+    <string name="error_episode_title">No episode number found</string>
+    <string name="error_episode_message">No episode number found in URL.</string>
+    <string name="error_connection_title">Unable to download file</string>
+    <string name="error_connection_message">No network connectivity detected.</string>
+    <string name="error_domain_title">Invalid domain</string>
+    <string name="error_domain_message">Domain is not thisamericanlife.org</string>
+    <string name="error_storage_title">Unable to download file</string>
+    <string name="error_storage_message">Unable to write to external storage.</string>
+    <string name="download_description">Downloading This American Life </string>
+    
 
 </resources>

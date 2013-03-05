@@ -97,7 +97,7 @@ public class TALDownloaderActivity extends Activity {
         	
         	// Notify user of download status
         	request.setTitle(getString(R.string.app_name));
-        	request.setDescription(R.string.download_description + episode + "...");
+        	request.setDescription(getString(R.string.download_description) + " " + episode + "...");
         	request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); // API 11
         	
         	// Initiate the download

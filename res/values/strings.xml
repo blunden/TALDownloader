@@ -12,7 +12,7 @@
     <string name="error_domain_message">Domain is not thisamericanlife.org</string>
     <string name="error_storage_title">Unable to download file</string>
     <string name="error_storage_message">Unable to write to external storage.</string>
-    <string name="download_description">Downloading This American Life </string>
+    <string name="download_description">Downloading This American Life</string>
     
 
 </resources>

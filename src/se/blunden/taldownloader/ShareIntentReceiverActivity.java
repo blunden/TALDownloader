@@ -13,8 +13,7 @@ import java.util.regex.*;
  * This Activity receives Share URL intents from the
  * episode pages of thisamericanlife.org and downloads
  * the mp3 of the episode in question by parsing the URL
- * and generating the direct link to the mp3 file on their
- * server.
+ * and starts a download of the mp3 file on their server.
  * 
  * TODO: Register for intent to handle clicking on the notification.
  * 
@@ -22,11 +21,13 @@ import java.util.regex.*;
  *
  */
 
-public class TALDownloaderActivity extends Activity {
+public class ShareIntentReceiverActivity extends Activity {
     
 	private static final String TAG = "TALDownloader";
 	
-	@SuppressWarnings("deprecation") // Consider using DialogFragment instead. Bad for compatibility though.
+	// Consider using DialogFragment instead.
+	// Bad for compatibility though without the support library.
+	@SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class TALDownloaderActivity extends Activity {
         		return;
         	}
         	
-        	// Start a downloader
+        	// Start the download
         	Downloader downloader = new Downloader(this);
         	int returnCode = downloader.download(episode);
         	
@@ -82,7 +83,6 @@ public class TALDownloaderActivity extends Activity {
     		return match.substring(1, match.length() - 1); // remove slashes
     	} else {
     		// No match
-    		// TODO: Find suitable exception to throw instead
     		return "";
     	}
     }

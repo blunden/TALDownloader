@@ -3,15 +3,9 @@ package se.blunden.taldownloader;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.net.NetworkInfo;
 import android.util.Log;
 import java.util.regex.*;
 

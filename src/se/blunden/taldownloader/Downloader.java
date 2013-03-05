@@ -12,6 +12,8 @@ public class Downloader {
 	private static final String TAG = "TALDownloader";
 	private static final String talBaseUrl = "http://audio.thisamericanlife.org/jomamashouse/ismymamashouse/";
 	
+	protected long id;
+	
 	Context context;
 	
 	public Downloader(Context context) {
@@ -24,6 +26,16 @@ public class Downloader {
     	
     	return (activeNetwork != null && activeNetwork.isConnected());
     }
+	
+	public boolean isNumeric(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch(NumberFormatException e) {
+			// Not a number
+			return false;
+		}
+		return true;
+	}
 	
 	public int download(String episode) {
 		// Make sure we have an internet connection
@@ -38,6 +50,11 @@ public class Downloader {
     		Log.e(TAG, "Storage not mounted or not writeable!");
     		
     		return StatusCode.DIALOG_ERROR_STORAGE_ID;
+    	}
+    	
+    	if(!isNumeric(episode)) {
+    		Log.e(TAG, "Invalid episode number (not a number)!");
+    		return StatusCode.DIALOG_ERROR_EPISODE_ID;
     	}
     	
     	// Build download URL
@@ -59,7 +76,7 @@ public class Downloader {
     	
     	// Initiate the download
     	DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-    	dm.enqueue(request);
+    	id = dm.enqueue(request);
     	
     	return StatusCode.SUCCESS;
 	}

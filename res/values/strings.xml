@@ -13,6 +13,9 @@
     <string name="error_storage_title">Unable to download file</string>
     <string name="error_storage_message">Unable to write to external storage.</string>
     <string name="download_description">Downloading This American Life</string>
-    
 
+    <string name="input_episode">Input episode number</string>
+    <string name="button_download_episode">Download episode</string>
+    <string name="launcher_activity_description">Enter the episode number of the This American Life episode you wish to download.</string>
+    
 </resources>

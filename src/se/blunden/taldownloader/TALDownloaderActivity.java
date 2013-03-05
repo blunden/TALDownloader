@@ -110,11 +110,7 @@ public class TALDownloaderActivity extends Activity {
     			   .setMessage(R.string.error_episode_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
-    				   public void onClick(DialogInterface dialog, int id) {
-    		                finish();
-    		           }
-    			   });
+    			   .setNeutralButton(R.string.dialog_button_ok, new DismissOnClickListener());
     		dialog = builder.create();
             break;
         case StatusCode.DIALOG_ERROR_CONNECTION_ID:
@@ -123,11 +119,7 @@ public class TALDownloaderActivity extends Activity {
     			   .setMessage(R.string.error_connection_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
-    				   public void onClick(DialogInterface dialog, int id) {
-    		                finish();
-    		           }
-    			   });
+    			   .setNeutralButton(R.string.dialog_button_ok,  new DismissOnClickListener());
     		dialog = builder.create();
             break;
         case StatusCode.DIALOG_ERROR_DOMAIN_ID:
@@ -136,11 +128,7 @@ public class TALDownloaderActivity extends Activity {
     			   .setMessage(R.string.error_domain_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
-    				   public void onClick(DialogInterface dialog, int id) {
-    		                finish();
-    		           }
-    			   });
+    			   .setNeutralButton(R.string.dialog_button_ok,  new DismissOnClickListener());
     		dialog = builder.create();
         	break;
         case StatusCode.DIALOG_ERROR_STORAGE_ID:
@@ -149,16 +137,19 @@ public class TALDownloaderActivity extends Activity {
     			   .setMessage(R.string.error_storage_message)
     			   .setIconAttribute(android.R.attr.alertDialogIcon)
     			   .setCancelable(false)
-    			   .setNeutralButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
-    				   public void onClick(DialogInterface dialog, int id) {
-    		                finish();
-    		           }
-    			   });
+    			   .setNeutralButton(R.string.dialog_button_ok,  new DismissOnClickListener());
     		dialog = builder.create();
         	break;
         default:
             dialog = null;
         }
         return dialog;
+    }
+    
+    private final class DismissOnClickListener implements DialogInterface.OnClickListener {
+    	public void onClick(DialogInterface dialog, int which) {
+    		// There is nothing worthwhile to do here. Just quit.
+    		finish();
+    	}
     }
 }

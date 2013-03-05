@@ -32,11 +32,6 @@ public class TALDownloaderActivity extends Activity {
     
 	private static final String TAG = "TALDownloader";
 	
-	private static final int DIALOG_ERROR_EPISODE_ID = 0;
-	private static final int DIALOG_ERROR_CONNECTION_ID = 1;
-	private static final int DIALOG_ERROR_DOMAIN_ID = 2;
-	private static final int DIALOG_ERROR_STORAGE_ID = 3;
-	
 	@SuppressWarnings("deprecation") // Consider using DialogFragment instead. Bad for compatibility though.
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +45,10 @@ public class TALDownloaderActivity extends Activity {
         	
         	String receivedUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
         	
-        	String talBaseUrl = "http://audio.thisamericanlife.org/jomamashouse/ismymamashouse/";
-        	
         	if(!isThisAmericanLife(receivedUrl)) {
         		Log.e(TAG, "Invalid domain!");
         		
-        		showDialog(DIALOG_ERROR_DOMAIN_ID);
+        		showDialog(StatusCode.DIALOG_ERROR_DOMAIN_ID);
         		return;
         	}
         	
@@ -63,46 +56,17 @@ public class TALDownloaderActivity extends Activity {
         	if(episode.compareTo("") == 0) {
         		Log.e(TAG, "No episode number found in URL: " + receivedUrl);
         		
-        		showDialog(DIALOG_ERROR_EPISODE_ID);
+        		showDialog(StatusCode.DIALOG_ERROR_EPISODE_ID);
         		return;
         	}
         	
-        	// Make sure we have an internet connection
-        	if(!isConnected()) {
-        		Log.e(TAG, "No internet connection detected!");
-        		
-        		showDialog(DIALOG_ERROR_CONNECTION_ID);
-        		return;
+        	// Start a downloader
+        	Downloader downloader = new Downloader(this);
+        	int returnCode = downloader.download(episode);
+        	
+        	if(returnCode != StatusCode.SUCCESS) {
+        		showDialog(returnCode);
         	}
-        	
-        	// Make sure external storage is mounted and writable
-        	if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-        		Log.e(TAG, "Storage not mounted or not writeable!");
-        		
-        		showDialog(DIALOG_ERROR_STORAGE_ID);
-        		return;
-        	}
-        	
-        	// Build download URL
-        	String talUrl = talBaseUrl + episode + ".mp3";
-        	
-        	DownloadManager.Request request = new DownloadManager.Request(Uri.parse(talUrl));
-        	
-        	// Download to the Podcast directory 
-        	request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PODCASTS , episode + ".mp3");
-        	Log.d(TAG, "Download directory set to: " + Environment.DIRECTORY_PODCASTS);
-        	
-        	// Run Media Scanner when done to make it show up in music players
-        	request.allowScanningByMediaScanner();
-        	
-        	// Notify user of download status
-        	request.setTitle(getString(R.string.app_name));
-        	request.setDescription(getString(R.string.download_description) + " " + episode + "...");
-        	request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); // API 11
-        	
-        	// Initiate the download
-        	DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        	dm.enqueue(request);
         }        
         finish();
     }
@@ -141,19 +105,12 @@ public class TALDownloaderActivity extends Activity {
     	return m.matches();
     }
     
-	public boolean isConnected() {
-    	ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-    	NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-    	
-    	return (activeNetwork != null && activeNetwork.isConnected());
-    }
-    
     @Override
     protected Dialog onCreateDialog(int id) {
     	Dialog dialog;
         AlertDialog.Builder builder;
         switch(id) {
-        case DIALOG_ERROR_EPISODE_ID:
+        case StatusCode.DIALOG_ERROR_EPISODE_ID:
         	builder = new AlertDialog.Builder(this);
     		builder.setTitle(R.string.error_episode_title)
     			   .setMessage(R.string.error_episode_message)
@@ -166,7 +123,7 @@ public class TALDownloaderActivity extends Activity {
     			   });
     		dialog = builder.create();
             break;
-        case DIALOG_ERROR_CONNECTION_ID:
+        case StatusCode.DIALOG_ERROR_CONNECTION_ID:
         	builder = new AlertDialog.Builder(this);
     		builder.setTitle(R.string.error_connection_title)
     			   .setMessage(R.string.error_connection_message)
@@ -179,7 +136,7 @@ public class TALDownloaderActivity extends Activity {
     			   });
     		dialog = builder.create();
             break;
-        case DIALOG_ERROR_DOMAIN_ID:
+        case StatusCode.DIALOG_ERROR_DOMAIN_ID:
         	builder = new AlertDialog.Builder(this);
     		builder.setTitle(R.string.error_domain_title)
     			   .setMessage(R.string.error_domain_message)
@@ -192,7 +149,7 @@ public class TALDownloaderActivity extends Activity {
     			   });
     		dialog = builder.create();
         	break;
-        case DIALOG_ERROR_STORAGE_ID:
+        case StatusCode.DIALOG_ERROR_STORAGE_ID:
         	builder = new AlertDialog.Builder(this);
     		builder.setTitle(R.string.error_storage_title)
     			   .setMessage(R.string.error_storage_message)

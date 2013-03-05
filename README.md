@@ -1,7 +1,8 @@
 TALDownloader
 ======
 
-A simple Android app for downloading This American Life episodes by sharing the episode URL from the Browser.
+A simple Android app for downloading This American Life episodes by sharing
+the episode URL from the Browser or entering the episode number manually.
 It was a way for me to mess around with parts of the Android API.
 
 Installation

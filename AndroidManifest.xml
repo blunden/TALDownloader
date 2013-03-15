@@ -28,7 +28,7 @@
         </activity>
         <activity 
             android:name=".LauncherActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+            android:theme="@style/AppTheme"
             android:hardwareAccelerated="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -14,7 +14,7 @@
 
     <EditText 
         android:id="@+id/input_episode"
-        android:inputType="text"
+        android:inputType="number"
         android:hint="@string/input_episode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />

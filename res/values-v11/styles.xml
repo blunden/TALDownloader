@@ -1,5 +1,22 @@
-<resources>
-
-    <style name="AppTheme" parent="android:Theme.Holo.Light" />
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="AppTheme" parent="TalThemeBase" >
+        <!-- Just apply the base theme -->
+    </style>
+    
+    <style name="ColorButton" >
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:background">@drawable/color_button_compat_selector</item>
+    </style>
+    
 </resources>

@@ -1,13 +1,13 @@
 package se.blunden.taldownloader;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class LauncherActivity extends Activity {
+public class LauncherActivity extends ActionBarActivity {
 	private static final String TAG = "TALDownloader";
 	
 	private Button downloadButton;

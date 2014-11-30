@@ -8,7 +8,7 @@
 		android:id="@+id/description"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="12dp"
+		android:padding="16dp"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:text="@string/launcher_activity_description" />
 
@@ -16,13 +16,16 @@
         android:id="@+id/input_episode"
         android:inputType="number"
         android:hint="@string/input_episode"
+        android:layout_margin="12dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/download_episode"
         android:text="@string/button_download_episode"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        style="@style/ColorButton" />"
 </LinearLayout>

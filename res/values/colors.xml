@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tal_primary">#ff4e3c62</color>
+    <color name="tal_primary_dark">#ff382b46</color>
+    <color name="tal_accent">#ff664f7f</color>
+    
+    <color name="white">#ffffffff</color>
+</resources>

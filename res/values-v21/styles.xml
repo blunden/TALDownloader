@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="AppTheme" parent="TalThemeBase" >
+        <item name="android:colorButtonNormal">@color/tal_primary</item>
+    </style>
+    
+    <style name="ColorButton" >
+        <!-- Empty style to not override the native button style -->
+    </style>
+    
+</resources>

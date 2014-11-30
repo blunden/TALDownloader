@@ -28,8 +28,11 @@ public class LauncherActivity extends ActionBarActivity {
                 public void onClick(View view) {
                 	// TODO: Display error to the user if invalid
                 	// ie. check the return value and create alert dialog
-                	String episode = episodeInputField.getText().toString();
+                	String episode = episodeInputField.getText().toString().trim();
                 	downloader.download(episode);
+                	
+                	// Clear the input field
+                	episodeInputField.setText("");
                 	
                 	Log.d(TAG, "input: " + episode);
                 }

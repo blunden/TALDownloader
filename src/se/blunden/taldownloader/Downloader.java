@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class Downloader {
 	private static final String TAG = "TALDownloader";
-	private static final String talBaseUrl = "http://audio.thisamericanlife.org/jomamashouse/ismymamashouse/";
+	private static final String talBaseUrl = "http://audio.thisamericanlife.org/";
 	
 	protected long id;
 	
@@ -58,7 +58,7 @@ public class Downloader {
     	}
     	
     	// Build download URL
-    	String talUrl = talBaseUrl + episode + ".mp3";
+    	String talUrl = talBaseUrl + episode + "/" + episode + ".mp3";
     	
     	DownloadManager.Request request = new DownloadManager.Request(Uri.parse(talUrl));
     	
